@@ -22,8 +22,7 @@ public class Repo {
        if (userList.size() >0){
            for (User user: userList
            ) {
-               user.getName();
-               user.getAge();
+               user.toString();
            }
        }else {
            System.out.println("User list is empty! Add new User.");
