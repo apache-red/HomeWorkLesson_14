@@ -4,12 +4,13 @@ import com.redcompany.red.logic.consolelogic.MenuLogic;
 
 public class Menu {
 
-
     private MenuLogic menuLogic;
 
+    public Menu() {
+        this.menuLogic = new MenuLogic();
+    }
 
     public void startProgram() {
-        this.menuLogic = new MenuLogic();
         showMainMenu();
         passLinkMenuToMenuLogic();
         menuLogic.choseActionMainMenu(menuLogic.writeAction());
@@ -17,7 +18,8 @@ public class Menu {
     }
 
     private void showMainMenu() {
-        System.out.println("Select an action. Enter the number 1...2");
+        System.out.println("------------------------------");
+        System.out.println("Select an action. Enter the number 1...3");
         System.out.println("1. Choose if you want to get a list of users");
         System.out.println("2. Choose if you want to create new user");
         System.out.println("3. Choose if you want to exit from this program");
