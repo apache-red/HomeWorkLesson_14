@@ -29,6 +29,17 @@ public class Repo {
        }
     }
 
+    public void showDataUserList(ArrayList<User> userList){
+        if (userList.size() >0){
+            for (User user: userList
+            ) {
+                System.out.println( user.toString());
+            }
+        }else {
+            System.out.println("User list is empty! Add new User.");
+        }
+    }
+
 
     public List<User> getUserList() {
         return userList;

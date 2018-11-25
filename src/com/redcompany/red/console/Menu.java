@@ -22,7 +22,9 @@ public class Menu {
         System.out.println("Select an action. Enter the number 1...3");
         System.out.println("1. Choose if you want to get a list of users");
         System.out.println("2. Choose if you want to create new user");
-        System.out.println("3. Choose if you want to exit from this program");
+        System.out.println("3. Serialize all data in an ArrayList");
+        System.out.println("4. Deserialize all data ");
+        System.out.println("5. Choose if you want to exit from this program");
         System.out.println("------------------------------");
     }
 

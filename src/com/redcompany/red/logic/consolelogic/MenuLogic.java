@@ -24,6 +24,12 @@ public class MenuLogic {
                 simpleClient.addNewUser();
                 break;
             case 3:
+                simpleClient.serializeAllList();
+                break;
+            case 4:
+                simpleClient.desserializeAllList();
+                break;
+            case 5:
                 System.out.println("Program was stopped");
                 System.exit(0);
                 break;

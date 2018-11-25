@@ -2,10 +2,12 @@ package com.redcompany.red.logic.network.server;
 
 import com.redcompany.red.entity.User;
 import com.redcompany.red.repository.Repo;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+
 
 public class SimpleServer {
 
@@ -21,7 +23,9 @@ public class SimpleServer {
         byte[] data = new byte[1024];
         String showAll = initMessage_1();
         String addNewUser = initMessage_2();
-        try (ServerSocket serverSocket = new ServerSocket(9300)) {
+        String serialize = initMessage_3();
+        String deserialize = initMessage_4();
+        try (ServerSocket serverSocket = new ServerSocket(9301)) {
             System.out.println("Server created and started:");
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -35,10 +39,37 @@ public class SimpleServer {
                     repo.addDataToList(new User("NewUser" + (int) (Math.random() * 100), (int) (Math.random() * 100)));
                     System.out.println("New user successfully created!");
                 }
+                if (msg.equals(serialize)) {
+                   serializeList();
+                }
+                if (msg.equals(deserialize)) {
+                    deserializeList();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void serializeList() {
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("user"))) {
+            os.writeObject(repo.getUserList());
+            System.out.println("serialize comleted");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Object deserializeList() {
+        Object obj = null;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user"))) {
+            obj = ois.readObject();
+            repo.showDataUserList((ArrayList<User>) obj);
+            System.out.println("deserialize comleted");
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 
     public void initStartData() {
@@ -76,6 +107,24 @@ public class SimpleServer {
         data[4] = 115;
         data[5] = 101;
         data[6] = 114;
+        String msg = new String(data);
+        return msg;
+    }
+    private String initMessage_3() {
+        byte[] data = new byte[1024];
+        data[0] = 115;
+        data[1] = 101;
+        data[2] = 114;
+        String msg = new String(data);
+        return msg;
+    }
+    private String initMessage_4() {
+        byte[] data = new byte[1024];
+        data[0] = 100;
+        data[1] = 101;
+        data[2] = 115;
+        data[3] = 101;
+        data[4] = 114;
         String msg = new String(data);
         return msg;
     }
